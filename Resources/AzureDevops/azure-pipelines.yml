@@ -62,12 +62,13 @@ stages:
           - task: Kubernetes@1
             displayName: kubectl create pat token secret
             inputs:
-              useClusterAdmin: true
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'AKSenv-KubernetesClusterProject-docker-1656803398747'
               namespace: 'docker'
-              secretType: generic
-              secretArguments: --from-literal=AZP_TOKEN=$(AzurePatToken)  --from-literal=AZP_URL=$(AzureDevOpsUrl)  --from-literal=AZP_POOL=$(DockerPoolName)
-              secretName: mon-azuredevops-pat-token
-              forceUpdate: true
+              command: 
+              secretType: 'generic'
+              secretArguments: '--from-literal=AZP_TOKEN=$(AzurePatToken)  --from-literal=AZP_URL=$(AzureDevOpsUrl)  --from-literal=AZP_POOL=$(DockerPoolName)'
+              secretName: 'mon-azuredevops-pat-token'
           
           # Deploy to aks
           - task: KubernetesManifest@0
